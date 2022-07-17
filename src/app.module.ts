@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { EmailSenderModule } from './email-sender/email-sender.module';
 
 @Module({
@@ -10,6 +9,5 @@ import { EmailSenderModule } from './email-sender/email-sender.module';
     }),
     EmailSenderModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule {}
