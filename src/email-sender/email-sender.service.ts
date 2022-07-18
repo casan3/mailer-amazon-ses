@@ -1,5 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class EmailSenderService {
 
   async sendWelcomeMsg(user: User) {
     try {
-      await this.mailerService.sendMail({
+      const resp = await this.mailerService.sendMail({
         to: user.email,
         // from: '"Support Team" <support@example.com>', // override default from
         subject: 'Welcome to Ideactiva!',
@@ -18,8 +18,14 @@ export class EmailSenderService {
           name: user.name,
         },
       });
+      console.log(resp);
+      return { success: 'ok' };
     } catch (e) {
       console.log(e);
+      throw new HttpException(
+        'Error sendind email',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

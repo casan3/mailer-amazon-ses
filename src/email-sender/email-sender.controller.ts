@@ -10,9 +10,6 @@ export class EmailSenderController {
   async sendWelcomeMsg(@Body() payload: User) {
     const user = new User(payload.email, payload.name);
 
-    await this.sender.sendWelcomeMsg(user);
-    return {
-      success: 'ok',
-    };
+    return this.sender.sendWelcomeMsg(user);
   }
 }
